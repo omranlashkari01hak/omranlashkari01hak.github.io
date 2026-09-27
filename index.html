@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ========== سئو: این بخش رو بعد از آپلود سایت ویرایش کن ========== -->
+<title>عمران لشکری | برنامه‌نویس، امنیت و هوش مصنوعی</title>
+<meta name="description" content="وب‌سایت شخصی عمران لشکری، برنامه‌نویس علاقه‌مند به امنیت و هوش مصنوعی. معرفی کار، نوشته‌ها، عکس‌ها و راه ارتباط.">
+<meta name="author" content="عمران لشکری">
+<meta name="theme-color" content="#0D1430">
+<!-- بعد از گرفتن آدرس سایت، خط زیر رو فعال کن و آدرس خودت رو بذار:
+<link rel="canonical" href="https://YOUR-SITE-ADDRESS/">
+-->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="عمران لشکری | برنامه‌نویس، امنیت و هوش مصنوعی">
+<meta property="og:description" content="برنامه‌نویسی، امنیت و هوش مصنوعی؛ نوشته‌ها و کارهای عمران لشکری.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "عمران لشکری",
+  "alternateName": "Omran Lashkari",
+  "jobTitle": "برنامه‌نویس",
+  "description": "برنامه‌نویس علاقه‌مند به حوزه امنیت و هوش مصنوعی",
+  "sameAs": ["https://www.instagram.com/mr_lashkari86/"]
+}
+</script>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+<style>
+  :root {
+    --night: #0D1430;
+    --deep: #141C40;
+    --line: #2A3564;
+    --moon: #EAEEFA;
+    --mist: #9FA9D2;
+    --lamp: #FFB347;
+    --font: "Vazirmatn", Tahoma, "Segoe UI", system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--night);
+    color: var(--moon);
+    font-family: var(--font);
+    font-size: 1.0625rem;
+    line-height: 1.95;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--lamp); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { width: min(100% - 2.5rem, 62rem); margin-inline: auto; }
+
+  /* ---------- Header ---------- */
+  .top {
+    position: absolute; inset: 0 0 auto 0; z-index: 5;
+    padding-block: 1.25rem;
+  }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .brand { font-weight: 800; text-decoration: none; }
+  .nav { display: flex; gap: 1.4rem; font-size: .95rem; }
+  .nav a { text-decoration: none; color: var(--mist); }
+  .nav a:hover { color: var(--moon); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex; align-items: center;
+    padding: 7rem 0 15rem;
+    overflow: hidden;
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(3.4rem, 13vw, 8rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .hero .role {
+    margin: 1.4rem 0 0;
+    font-size: clamp(1.15rem, 3.2vw, 1.6rem);
+    font-weight: 300;
+    color: var(--mist);
+    max-width: 32rem;
+  }
+  .hero .actions { margin-top: 2.2rem; display: flex; flex-wrap: wrap; gap: .9rem; }
+
+  .btn {
+    display: inline-block;
+    padding: .7rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid var(--line);
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .btn:hover { border-color: var(--mist); }
+  .btn.main { background: var(--lamp); color: #2B1900; border-color: var(--lamp); }
+  .btn.main:hover { background: #ffc46b; border-color: #ffc46b; }
+
+  /* the night skyline: the one memorable element */
+  .skyline {
+    position: absolute; inset: auto 0 0 0;
+    height: 13rem;
+    display: flex; align-items: flex-end; justify-content: center; gap: 6px;
+    pointer-events: none;
+    direction: ltr;
+  }
+  .skyline .bld {
+    background: var(--deep);
+    border-radius: 3px 3px 0 0;
+    padding: 10px 7px 0;
+    display: grid; grid-template-columns: repeat(var(--cols), 8px); gap: 6px 6px;
+    align-content: start;
+  }
+  .skyline .win { width: 8px; height: 11px; background: #1B2550; border-radius: 1px; }
+  .skyline .win.on { background: #3A4A8C; }
+  .skyline .win.lamp {
+    background: var(--lamp);
+    box-shadow: 0 0 14px 3px rgba(255,179,71,.55);
+    animation: glow 1.4s ease-out both;
+  }
+  @keyframes glow { from { background: #1B2550; box-shadow: none; } }
+  .skyline-note {
+    position: absolute; inset-inline: 0; bottom: .8rem; text-align: center;
+    font-size: .85rem; color: var(--mist); font-weight: 300;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding-block: 5.5rem; border-top: 1px solid var(--line); }
+  h2 { margin: 0 0 2rem; font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 800; line-height: 1.3; }
+  p { margin: 0 0 1.1rem; max-width: 40rem; }
+
+  /* work: rows, not cards */
+  .work { list-style: none; margin: 0; padding: 0; }
+  .work li {
+    display: grid; grid-template-columns: 11rem 1fr; gap: 1.5rem;
+    padding-block: 1.6rem; border-bottom: 1px solid var(--line);
+  }
+  .work li:first-child { border-top: 1px solid var(--line); }
+  .work h3 { margin: 0; font-size: 1.35rem; font-weight: 800; color: var(--lamp); }
+  .work p { margin: 0; color: var(--mist); }
+
+  /* gallery */
+  .gallery {
+    display: grid; gap: .8rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery figure {
+    margin: 0; position: relative; overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--deep);
+    border: 1.5px dashed var(--line);
+    border-radius: 6px;
+    display: grid; place-items: center;
+    color: var(--mist); font-size: .9rem; text-align: center; padding: 1rem;
+  }
+  .gallery figure.wide { grid-column: span 2; aspect-ratio: 16 / 9; }
+  .gallery img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .gallery figure.has-img { border-style: solid; border-color: transparent; }
+  @media (min-width: 700px) {
+    .gallery { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* blog */
+  .post { padding-block: 1.8rem; border-bottom: 1px solid var(--line); }
+  .post:first-of-type { border-top: 1px solid var(--line); }
+  .post time { font-size: .9rem; color: var(--mist); }
+  .post h3 { margin: .2rem 0 .6rem; font-size: 1.4rem; font-weight: 800; }
+  .post p { margin-bottom: 0; color: #C9D0EB; }
+
+  /* contact */
+  .contact p { color: var(--mist); }
+
+  footer { padding-block: 2.5rem; border-top: 1px solid var(--line); color: var(--mist); font-size: .9rem; }
+
+  @media (max-width: 640px) {
+    .nav { gap: 1rem; font-size: .88rem; }
+    .work li { grid-template-columns: 1fr; gap: .3rem; }
+    .hero { padding-bottom: 13rem; }
+    .skyline { height: 10rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .skyline .win.lamp { animation: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home">عمران لشکری</a>
+    <nav class="nav" aria-label="منوی اصلی">
+      <a href="#work">کار من</a>
+      <a href="#about">درباره من</a>
+      <a href="#gallery">گالری</a>
+      <a href="#blog">وبلاگ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+
+  <!-- ========== معرفی ========== -->
+  <div class="hero">
+    <div class="wrap">
+      <h1>عمران لشکری</h1>
+      <p class="role">برنامه‌نویس علاقه‌مند به حوزه امنیت و هوش مصنوعی.</p>
+      <div class="actions">
+        <a class="btn main" href="https://www.instagram.com/mr_lashkari86/" target="_blank" rel="noopener">دیدن پیج اینستاگرام</a>
+        <a class="btn" href="#blog">خوندن نوشته‌ها</a>
+      </div>
+    </div>
+
+    <div class="skyline" id="skyline" aria-hidden="true"></div>
+    <div class="skyline-note">همه خوابن، یه پنجره روشنه.</div>
+  </div>
+
+  <!-- ========== کار من ========== -->
+  <section id="work">
+    <div class="wrap">
+      <h2>کار من</h2>
+      <ul class="work">
+        <li>
+          <h3>برنامه‌نویسی</h3>
+          <p>می‌نویسم، می‌سازم و یاد می‌گیرم. از ابزارهای کوچیک تا پروژه‌های کامل.</p>
+        </li>
+        <li>
+          <h3>امنیت</h3>
+          <p>با نگاه یه هکر به سیستم‌ها نگاه می‌کنم تا ضعف‌ها رو پیدا کنم و بشه بستشون.</p>
+        </li>
+        <li>
+          <h3>هوش مصنوعی</h3>
+          <p>ابزارها و ترفندهای کاربردی هوش مصنوعی رو تست می‌کنم و توی پیج اینستاگرامم آموزش می‌دم.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== درباره من ========== -->
+  <section id="about">
+    <div class="wrap">
+      <h2>درباره من</h2>
+      <p>عمران لشکری، برنامه‌نویس علاقه‌مند به حوزه هک امنیت و هوش مصنوعی.</p>
+      <!-- اینجا خودت بیشتر درباره خودت بنویس: از کی شروع کردی، چی یاد گرفتی، دنبال چی هستی -->
+      <p>اینجا چند خط دیگه درباره خودت بنویس: از کجا شروع کردی، چه چیزهایی بلدی و دنبال چی هستی.</p>
+    </div>
+  </section>
+
+  <!-- ========== گالری ========== -->
+  <!--
+    چطور عکس بذارم؟
+    ۱) عکس‌ها رو مستقیم کنار index.html آپلود کن (پوشه لازم نیست).
+    ۲) عکس‌ها رو با اسم 1.jpg، 2.jpg و ... آپلود کن.
+    عکس جای خالی رو خودش پر می‌کنه. برای عکس بیشتر یه بلوک <figure> کپی کن.
+  -->
+  <section id="gallery">
+    <div class="wrap">
+      <h2>گالری</h2>
+      <div class="gallery">
+        <figure class="wide"><img src="1.jpg" alt="عکس ۱ از عمران لشکری" loading="lazy">عکست رو با اسم 1.jpg آپلود کن</figure>
+        <figure><img src="2.jpg" alt="عکس ۲" loading="lazy">2.jpg</figure>
+        <figure><img src="3.jpg" alt="عکس ۳" loading="lazy">3.jpg</figure>
+        <figure><img src="4.jpg" alt="عکس ۴" loading="lazy">4.jpg</figure>
+        <figure><img src="5.jpg" alt="عکس ۵" loading="lazy">5.jpg</figure>
+        <figure><img src="6.jpg" alt="عکس ۶" loading="lazy">6.jpg</figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== وبلاگ ========== -->
+  <!--
+    چطور پست جدید بذارم؟
+    یکی از بلوک‌های <article class="post"> پایین رو کپی کن، بالای بقیه بچسبون
+    و تاریخ، عنوان و متن رو عوض کن. جدیدترین پست همیشه بالاست.
+  -->
+  <section id="blog">
+    <div class="wrap">
+      <h2>وبلاگ</h2>
+
+      <article class="post">
+        <time datetime="2026-09-21">۲۹ شهریور ۱۴۰۵</time>
+        <h3>اولین نوشته</h3>
+        <p>این یه نمونه‌ست. عنوان و متنش رو پاک کن و اولین نوشته‌ی خودت رو بنویس.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ========== ارتباط ========== -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>ارتباط با من</h2>
+      <p>سریع‌ترین راه، پیام توی اینستاگرامه.</p>
+      <p><a class="btn main" href="https://www.instagram.com/mr_lashkari86/" target="_blank" rel="noopener">@mr_lashkari86</a></p>
+      <!-- برای اضافه کردن تلگرام یا ایمیل، یه دکمه‌ی دیگه مثل بالا بذار:
+      <a class="btn" href="https://t.me/YOUR_ID" target="_blank" rel="noopener">تلگرام</a>
+      <a class="btn" href="mailto:YOUR_EMAIL">ایمیل</a>
+      -->
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© عمران لشکری</div>
+</footer>
+
+<script>
+  // Night skyline: fixed pattern, so it looks the same on every visit.
+  (function () {
+    var el = document.getElementById('skyline');
+    if (!el) return;
+    var seed = 7;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+
+    var count = window.innerWidth < 640 ? 9 : 17;
+    var lampBuilding = Math.floor(count * 0.62);
+
+    for (var i = 0; i < count; i++) {
+      var cols = 2 + Math.floor(rnd() * 3);
+      var rows = 4 + Math.floor(rnd() * 8);
+      var b = document.createElement('div');
+      b.className = 'bld';
+      b.style.setProperty('--cols', cols);
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols; c++) {
+          var w = document.createElement('span');
+          w.className = 'win';
+          if (rnd() < 0.22) w.className += ' on';
+          if (i === lampBuilding && r === 2 && c === 1) w.className = 'win lamp';
+          b.appendChild(w);
+        }
+      }
+      el.appendChild(b);
+    }
+
+    // show a gallery photo only if it actually exists
+    document.querySelectorAll('.gallery figure').forEach(function (f) {
+      var img = f.querySelector('img');
+      if (!img) return;
+      img.addEventListener('load', function () { f.classList.add('has-img'); f.style.fontSize = '0'; });
+      img.addEventListener('error', function () { img.remove(); });
+    });
+  })();
+</script>
+
+</body>
+</html>
