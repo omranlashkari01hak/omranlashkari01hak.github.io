@@ -1,0 +1,37 @@
+media:
+  input: photos
+  output: /photos
+  rename: safe
+  extensions: [jpg, jpeg, png, webp]
+
+content:
+  - name: site
+    label: محتوای سایت
+    type: file
+    path: data.json
+    format: json
+    fields:
+      - name: role
+        label: جمله زیر اسم
+        type: string
+      - name: about
+        label: درباره من
+        type: text
+      - name: images
+        label: عکس‌های گالری
+        type: image
+        list: true
+      - name: posts
+        label: نوشته‌های وبلاگ
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: عنوان
+            type: string
+          - name: date
+            label: تاریخ
+            type: date
+          - name: body
+            label: متن
+            type: text
