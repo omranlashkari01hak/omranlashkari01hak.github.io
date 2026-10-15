@@ -31,45 +31,76 @@
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --night: #0D1430;
-    --deep: #141C40;
-    --line: #2A3564;
-    --moon: #EAEEFA;
-    --mist: #9FA9D2;
+    --night: #0B1026;
+    --night-2: #10163A;
+    --deep: #161D48;
+    --card: #141A3E;
+    --line: #262E5C;
+    --line-soft: #1C2350;
+    --moon: #F1F3FC;
+    --mist: #9BA4CF;
+    --mist-dim: #717BA8;
     --lamp: #FFB347;
+    --lamp-soft: #FFD9A0;
+    --ring: #5B6BC4;
     --font: "Vazirmatn", Tahoma, "Segoe UI", system-ui, sans-serif;
+    --font-brand: "Orbitron", var(--font);
+    --ease: cubic-bezier(.2,.7,.2,1);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    background: var(--night);
+    background:
+      radial-gradient(60rem 36rem at 85% -10%, rgba(91,107,196,.20), transparent 60%),
+      radial-gradient(50rem 30rem at -10% 15%, rgba(255,179,71,.07), transparent 55%),
+      var(--night);
     color: var(--moon);
     font-family: var(--font);
     font-size: 1.0625rem;
-    line-height: 1.95;
+    line-height: 1.9;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   img { max-width: 100%; display: block; }
   a { color: inherit; }
+  ::selection { background: var(--lamp); color: #2B1900; }
   :focus-visible { outline: 3px solid var(--lamp); outline-offset: 3px; border-radius: 4px; }
 
   .wrap { width: min(100% - 2.5rem, 62rem); margin-inline: auto; }
 
   /* ---------- Header ---------- */
   .top {
-    position: absolute; inset: 0 0 auto 0; z-index: 5;
-    padding-block: 1.25rem;
+    position: fixed; inset: 0 0 auto 0; z-index: 20;
+    padding-block: 1.1rem;
+    background: linear-gradient(180deg, rgba(11,16,38,.92), rgba(11,16,38,0));
+    backdrop-filter: blur(2px);
+    transition: background .3s var(--ease), border-color .3s var(--ease), padding .3s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  .top.scrolled {
+    background: rgba(11,16,38,.86);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line-soft);
+    padding-block: .8rem;
   }
   .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-  .brand { font-weight: 800; text-decoration: none; }
-  .nav { display: flex; gap: 1.4rem; font-size: .95rem; }
-  .nav a { text-decoration: none; color: var(--mist); }
+  .brand { font-family: var(--font-brand); font-weight: 700; text-decoration: none; letter-spacing: .02em; font-size: 1.05rem; }
+  .nav { display: flex; gap: 1.5rem; font-size: .93rem; }
+  .nav a { text-decoration: none; color: var(--mist); position: relative; padding-block: .2rem; transition: color .2s; }
+  .nav a::after {
+    content: ''; position: absolute; right: 0; bottom: -2px; height: 1.5px; width: 0;
+    background: var(--lamp); transition: width .25s var(--ease);
+  }
   .nav a:hover { color: var(--moon); }
+  .nav a:hover::after { width: 100%; }
 
   /* ---------- Hero ---------- */
   .hero {
@@ -79,77 +110,117 @@
     padding: 7rem 0 15rem;
     overflow: hidden;
   }
+  .hero .eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .85rem; color: var(--mist); font-weight: 500;
+    margin-bottom: 1.4rem; letter-spacing: .01em;
+  }
+  .hero .eyebrow::before {
+    content: ''; width: .5rem; height: .5rem; border-radius: 50%;
+    background: var(--lamp); box-shadow: 0 0 10px 2px rgba(255,179,71,.6);
+    flex-shrink: 0;
+  }
   .hero h1 {
     margin: 0;
-    font-size: clamp(3.4rem, 13vw, 8rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    font-family: var(--font-brand);
+    font-size: clamp(2.5rem, 10vw, 5.6rem);
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: .01em;
+    background: linear-gradient(135deg, var(--moon) 35%, var(--lamp-soft) 75%, var(--lamp) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .hero .role {
-    margin: 1.4rem 0 0;
-    font-size: clamp(1.15rem, 3.2vw, 1.6rem);
+    margin: 1.5rem 0 0;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
     font-weight: 300;
     color: var(--mist);
     max-width: 32rem;
   }
-  .hero .actions { margin-top: 2.2rem; display: flex; flex-wrap: wrap; gap: .9rem; }
+  .hero .actions { margin-top: 2.4rem; display: flex; flex-wrap: wrap; gap: .9rem; }
 
   .btn {
-    display: inline-block;
-    padding: .7rem 1.5rem;
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .75rem 1.6rem;
     border-radius: 999px;
     font-weight: 600;
+    font-size: .96rem;
     text-decoration: none;
     border: 1.5px solid var(--line);
-    transition: background .2s, border-color .2s, color .2s;
+    background: rgba(255,255,255,.02);
+    transition: background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
   }
-  .btn:hover { border-color: var(--mist); }
-  .btn.main { background: var(--lamp); color: #2B1900; border-color: var(--lamp); }
-  .btn.main:hover { background: #ffc46b; border-color: #ffc46b; }
+  .btn:hover { border-color: var(--mist); transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn.main { background: var(--lamp); color: #2B1900; border-color: var(--lamp); box-shadow: 0 8px 24px -8px rgba(255,179,71,.55); }
+  .btn.main:hover { background: var(--lamp-soft); border-color: var(--lamp-soft); box-shadow: 0 10px 28px -6px rgba(255,179,71,.65); }
 
-  /* the night skyline: the one memorable element */
-  .skyline {
+  /* the night scene: laptop with code, a small AI robot, a palm tree */
+  .scene {
     position: absolute; inset: auto 0 0 0;
-    height: 13rem;
-    display: flex; align-items: flex-end; justify-content: center; gap: 6px;
+    height: 15rem;
     pointer-events: none;
     direction: ltr;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%);
+    mask-image: linear-gradient(180deg, transparent, #000 22%);
   }
-  .skyline .bld {
-    background: var(--deep);
-    border-radius: 3px 3px 0 0;
-    padding: 10px 7px 0;
-    display: grid; grid-template-columns: repeat(var(--cols), 8px); gap: 6px 6px;
-    align-content: start;
+  .scene-svg { width: 100%; height: 100%; display: block; }
+
+  .scene .trunk { fill: none; stroke: var(--line); stroke-width: 7; stroke-linecap: round; }
+  .scene .frond { fill: none; stroke: var(--mist-dim); stroke-width: 5; stroke-linecap: round; }
+
+  .scene .laptop-glow { fill: var(--lamp); opacity: .22; filter: blur(16px); }
+  .scene .laptop-base { fill: var(--deep); stroke: var(--line); stroke-width: 1.5; }
+  .scene .laptop-screen { fill: var(--night-2); stroke: var(--line); stroke-width: 2; }
+  .scene .code-line { fill: #7DD3FC; opacity: .55; animation: codeBlink 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: right center; }
+  .scene .code-line.c2 { fill: var(--lamp); animation-delay: .5s; }
+  .scene .code-line.c3 { fill: #A78BFA; animation-delay: 1s; }
+  .scene .code-line.c4 { fill: #7DD3FC; animation-delay: 1.5s; }
+  .scene .code-line.c5 { fill: var(--lamp); animation-delay: .2s; }
+
+  .scene .robot-body { fill: var(--deep); stroke: var(--line); stroke-width: 2; }
+  .scene .robot-head { fill: var(--card); stroke: var(--line); stroke-width: 2; }
+  .scene .robot-antenna { stroke: var(--line); stroke-width: 3; stroke-linecap: round; }
+  .scene .robot-tip { fill: var(--lamp); filter: drop-shadow(0 0 4px rgba(255,179,71,.8)); }
+  .scene .robot-eye {
+    fill: var(--lamp); filter: drop-shadow(0 0 4px rgba(255,179,71,.8));
+    transform-box: fill-box; transform-origin: center;
+    animation: blink 4.5s ease-in-out infinite;
   }
-  .skyline .win { width: 8px; height: 11px; background: #1B2550; border-radius: 1px; }
-  .skyline .win.on { background: #3A4A8C; }
-  .skyline .win.lamp {
-    background: var(--lamp);
-    box-shadow: 0 0 14px 3px rgba(255,179,71,.55);
-    animation: glow 1.4s ease-out both;
-  }
-  @keyframes glow { from { background: #1B2550; box-shadow: none; } }
+  .scene .robot-arm { fill: none; stroke: var(--line); stroke-width: 5; stroke-linecap: round; }
+
+  @keyframes codeBlink { 0%, 100% { opacity: .35; } 50% { opacity: .9; } }
+  @keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+
   .skyline-note {
-    position: absolute; inset-inline: 0; bottom: .8rem; text-align: center;
-    font-size: .85rem; color: var(--mist); font-weight: 300;
+    position: absolute; inset-inline: 0; bottom: .9rem; text-align: center;
+    font-size: .85rem; color: var(--mist-dim); font-weight: 300;
   }
 
   /* ---------- Sections ---------- */
-  section { padding-block: 5.5rem; border-top: 1px solid var(--line); }
-  h2 { margin: 0 0 2rem; font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 800; line-height: 1.3; }
+  section { padding-block: 5.5rem; border-top: 1px solid var(--line-soft); position: relative; }
+  .eyebrow-sm {
+    display: block; font-size: .82rem; font-weight: 600; color: var(--lamp);
+    letter-spacing: .02em; margin-bottom: .6rem;
+  }
+  h2 { margin: 0 0 2.2rem; font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 800; line-height: 1.3; letter-spacing: -.01em; }
   p { margin: 0 0 1.1rem; max-width: 40rem; }
 
-  /* work: rows, not cards */
-  .work { list-style: none; margin: 0; padding: 0; }
-  .work li {
-    display: grid; grid-template-columns: 11rem 1fr; gap: 1.5rem;
-    padding-block: 1.6rem; border-bottom: 1px solid var(--line);
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* work: cards */
+  .work { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+  .work li .tilt {
+    padding: 1.6rem; border: 1px solid var(--line-soft); border-radius: 14px;
+    background: linear-gradient(160deg, var(--card), rgba(20,26,62,.4));
+    transition: border-color .25s var(--ease), background .25s var(--ease), transform .35s var(--ease);
+    height: 100%;
   }
-  .work li:first-child { border-top: 1px solid var(--line); }
-  .work h3 { margin: 0; font-size: 1.35rem; font-weight: 800; color: var(--lamp); }
-  .work p { margin: 0; color: var(--mist); }
+  .work li:hover .tilt { border-color: var(--ring); }
+  .work .num { font-size: .8rem; font-weight: 700; color: var(--lamp); letter-spacing: .06em; }
+  .work h3 { margin: .7rem 0 .5rem; font-size: 1.2rem; font-weight: 800; }
+  .work p { margin: 0; color: var(--mist); font-size: .96rem; }
 
   /* gallery */
   .gallery {
@@ -159,54 +230,137 @@
   .gallery figure {
     margin: 0; position: relative; overflow: hidden;
     aspect-ratio: 4 / 5;
-    background: var(--deep);
+    background: var(--card);
     border: 1.5px dashed var(--line);
-    border-radius: 6px;
+    border-radius: 12px;
     display: grid; place-items: center;
     color: var(--mist); font-size: .9rem; text-align: center; padding: 1rem;
+    transition: border-color .25s var(--ease);
   }
   .gallery figure.wide { grid-column: span 2; aspect-ratio: 16 / 9; }
-  .gallery img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .gallery figure.has-img { border-style: solid; border-color: transparent; }
+  .gallery img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+  .gallery figure.has-img { border-style: solid; border-color: var(--line-soft); }
+  .gallery figure.has-img:hover img { transform: scale(1.04); }
   @media (min-width: 700px) {
     .gallery { grid-template-columns: repeat(3, 1fr); }
   }
 
   /* blog */
-  .post { padding-block: 1.8rem; border-bottom: 1px solid var(--line); }
-  .post:first-of-type { border-top: 1px solid var(--line); }
-  .post time { font-size: .9rem; color: var(--mist); }
-  .post h3 { margin: .2rem 0 .6rem; font-size: 1.4rem; font-weight: 800; }
+  .post { padding-block: 1.9rem; border-bottom: 1px solid var(--line-soft); transition: padding-right .25s var(--ease); }
+  .post:first-of-type { border-top: 1px solid var(--line-soft); }
+  .post:hover { padding-right: .4rem; }
+  .post time { font-size: .86rem; color: var(--mist-dim); }
+  .post h3 { margin: .3rem 0 .7rem; font-size: 1.35rem; font-weight: 800; }
   .post p { margin-bottom: 0; color: #C9D0EB; }
 
   /* contact */
+  .contact { border-top: 1px solid var(--line-soft); }
   .contact p { color: var(--mist); }
 
-  footer { padding-block: 2.5rem; border-top: 1px solid var(--line); color: var(--mist); font-size: .9rem; }
+  footer { padding-block: 2.5rem; border-top: 1px solid var(--line-soft); color: var(--mist-dim); font-size: .88rem; }
 
   @media (max-width: 640px) {
     .nav { gap: 1rem; font-size: .88rem; }
-    .work li { grid-template-columns: 1fr; gap: .3rem; }
-    .hero { padding-bottom: 13rem; }
-    .skyline { height: 10rem; }
+    .work { grid-template-columns: 1fr; }
+    .hero { padding-bottom: 14rem; }
+    .scene { height: 11rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .skyline .win.lamp { animation: none; }
+    .scene .code-line, .scene .robot-eye { animation: none; opacity: .7; }
+    .reveal { opacity: 1; transform: none; transition: none; }
   }
+
+  /* ---------- Intro / welcome screen ---------- */
+  #intro {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    background:
+      radial-gradient(50rem 30rem at 50% 20%, rgba(91,107,196,.25), transparent 60%),
+      var(--night);
+    transition: opacity .5s var(--ease), visibility .5s var(--ease);
+  }
+  #intro.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+  #intro .box { max-width: 26rem; }
+  #intro .glyph {
+    font-family: var(--font-brand); font-size: 2.6rem; color: var(--lamp);
+    margin-bottom: 1rem; letter-spacing: .05em;
+    animation: floatY 3.5s ease-in-out infinite;
+  }
+  #intro h2 { font-size: clamp(1.5rem, 6vw, 2.1rem); margin-bottom: .9rem; }
+  #intro p { color: var(--mist); margin: 0 auto 1.8rem; }
+  html.entered #intro { display: none; }
+  body.no-scroll { overflow: hidden; }
+
+  @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  /* ---------- 3D tilt ---------- */
+  .tilt-wrap { perspective: 1000px; }
+  .tilt { transform-style: preserve-3d; transition: transform .35s var(--ease); will-change: transform; }
+
+  /* ---------- Videos ---------- */
+  .videos { display: grid; gap: 1.2rem; }
+  .video-card {
+    border: 1px solid var(--line-soft); border-radius: 14px; overflow: hidden;
+    background: var(--card);
+  }
+  .video-card .frame { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
+  .video-card iframe, .video-card video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video-card .title { padding: .9rem 1.1rem; font-weight: 700; font-size: .98rem; }
+  .videos-empty { color: var(--mist); }
+
+  /* ---------- Support widget ---------- */
+  #support-toggle {
+    position: fixed; bottom: 1.25rem; left: 1.25rem; z-index: 40;
+    width: 3.3rem; height: 3.3rem; border-radius: 50%;
+    background: var(--lamp); color: #2B1900; border: none;
+    font-size: 1.4rem; font-weight: 800;
+    box-shadow: 0 10px 26px -8px rgba(255,179,71,.65);
+    cursor: pointer;
+  }
+  #support-panel {
+    position: fixed; z-index: 41; bottom: 5.2rem; left: 1.25rem;
+    width: min(20rem, calc(100vw - 2.5rem));
+    background: var(--card); border: 1px solid var(--line-soft); border-radius: 16px;
+    padding: 1.1rem; box-shadow: 0 20px 50px -10px rgba(0,0,0,.5);
+    opacity: 0; transform: translateY(10px) scale(.97); pointer-events: none;
+    transition: opacity .25s var(--ease), transform .25s var(--ease);
+  }
+  #support-panel.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  #support-panel h3 { margin: 0 0 .6rem; font-size: 1.05rem; }
+  #support-panel textarea {
+    width: 100%; min-height: 5rem; resize: vertical;
+    background: var(--night-2); color: var(--moon); border: 1px solid var(--line);
+    border-radius: 10px; padding: .6rem .8rem; font-family: var(--font); font-size: .92rem;
+  }
+  #support-panel .row { display: flex; gap: .6rem; margin-top: .7rem; }
+  #support-panel .row .btn { flex: 1; justify-content: center; font-size: .88rem; padding: .6rem 1rem; }
 </style>
 </head>
 
 <body>
+<script>document.documentElement.classList.toggle('entered', sessionStorage.getItem('omran-entered') === '1');</script>
+
+<div id="intro">
+  <div class="box">
+    <div class="glyph">&lt;/&gt;</div>
+    <h2>به دنیای برنامه‌نویسی خوش اومدی 👋</h2>
+    <p>اینجا سایت شخصی عمرانه؛ کارها، نوشته‌ها و عکس‌هاش رو ببین.</p>
+    <button class="btn main" id="intro-enter" type="button">ورود به سایت</button>
+  </div>
+</div>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#home">عمران لشکری</a>
+    <a class="brand" href="#home">OMRAN LASHKARI</a>
     <nav class="nav" aria-label="منوی اصلی">
       <a href="#work">کار من</a>
       <a href="#about">درباره من</a>
       <a href="#gallery">گالری</a>
+      <a href="#videos">ویدیو</a>
       <a href="#blog">وبلاگ</a>
     </nav>
   </div>
@@ -217,7 +371,8 @@
   <!-- ========== معرفی ========== -->
   <div class="hero">
     <div class="wrap">
-      <h1>عمران لشکری</h1>
+      <span class="eyebrow">در دسترس برای همکاری</span>
+      <h1>OMRAN<br>LASHKARI</h1>
       <p class="role" id="role">برنامه‌نویس علاقه‌مند به حوزه امنیت و هوش مصنوعی.</p>
       <div class="actions">
         <a class="btn main" href="https://www.instagram.com/mr_lashkari86/" target="_blank" rel="noopener">دیدن پیج اینستاگرام</a>
@@ -225,34 +380,73 @@
       </div>
     </div>
 
-    <div class="skyline" id="skyline" aria-hidden="true"></div>
-    <div class="skyline-note">همه خوابن، یه پنجره روشنه.</div>
+    <div class="scene tilt-wrap" aria-hidden="true">
+      <svg class="scene-svg tilt" id="scene-svg" viewBox="0 0 900 260" preserveAspectRatio="xMidYMax meet">
+        <!-- درخت نخل -->
+        <g>
+          <path class="trunk" d="M800 260 C797 205 788 155 772 115" />
+          <path class="frond" d="M772 115 C735 100 702 88 670 96" />
+          <path class="frond" d="M772 115 C748 78 732 45 720 18" />
+          <path class="frond" d="M772 115 C800 82 828 58 858 50" />
+          <path class="frond" d="M772 115 C808 102 838 100 866 112" />
+          <path class="frond" d="M772 115 C760 80 762 48 778 12" />
+        </g>
+        <!-- لپ‌تاپ -->
+        <g transform="translate(330,0)">
+          <rect class="laptop-glow" x="30" y="55" width="220" height="150" rx="18" />
+          <rect class="laptop-screen" x="50" y="55" width="180" height="120" rx="10" />
+          <rect class="code-line c1" x="68" y="76" width="85" height="7" rx="3.5" />
+          <rect class="code-line c2" x="68" y="93" width="125" height="7" rx="3.5" />
+          <rect class="code-line c3" x="68" y="110" width="55" height="7" rx="3.5" />
+          <rect class="code-line c4" x="68" y="127" width="105" height="7" rx="3.5" />
+          <rect class="code-line c5" x="68" y="144" width="75" height="7" rx="3.5" />
+          <rect class="code-line c1" x="68" y="161" width="95" height="7" rx="3.5" />
+          <path class="laptop-base" d="M20 196 L260 196 L282 218 L0 218 Z" />
+        </g>
+        <!-- ربات هوش مصنوعی -->
+        <g transform="translate(100,30)">
+          <path class="robot-arm" d="M68 118 C108 120 138 128 150 142" />
+          <rect class="robot-body" x="0" y="78" width="72" height="78" rx="16" />
+          <circle class="robot-head" cx="36" cy="54" r="34" />
+          <line class="robot-antenna" x1="36" y1="20" x2="36" y2="0" />
+          <circle class="robot-tip" cx="36" cy="-3" r="5" />
+          <circle class="robot-eye" cx="22" cy="54" r="5.5" />
+          <circle class="robot-eye" cx="50" cy="54" r="5.5" />
+        </g>
+      </svg>
+    </div>
+    <div class="skyline-note">وقتی همه خوابن، کد هنوز روشنه.</div>
   </div>
 
   <!-- ========== کار من ========== -->
   <section id="work">
-    <div class="wrap">
+    <div class="wrap reveal">
+      <span class="eyebrow-sm">تخصص</span>
       <h2>کار من</h2>
       <ul class="work">
-        <li>
+        <li class="tilt-wrap"><div class="tilt">
+          <span class="num">۰۱</span>
           <h3>برنامه‌نویسی</h3>
           <p>می‌نویسم، می‌سازم و یاد می‌گیرم. از ابزارهای کوچیک تا پروژه‌های کامل.</p>
-        </li>
-        <li>
+        </div></li>
+        <li class="tilt-wrap"><div class="tilt">
+          <span class="num">۰۲</span>
           <h3>امنیت</h3>
           <p>با نگاه یه هکر به سیستم‌ها نگاه می‌کنم تا ضعف‌ها رو پیدا کنم و بشه بستشون.</p>
-        </li>
-        <li>
+        </div></li>
+        <li class="tilt-wrap"><div class="tilt">
+          <span class="num">۰۳</span>
           <h3>هوش مصنوعی</h3>
           <p>ابزارها و ترفندهای کاربردی هوش مصنوعی رو تست می‌کنم و توی پیج اینستاگرامم آموزش می‌دم.</p>
-        </li>
+        </div></li>
       </ul>
     </div>
   </section>
 
   <!-- ========== درباره من ========== -->
   <section id="about">
-    <div class="wrap">
+    <div class="wrap reveal">
+      <span class="eyebrow-sm">معرفی</span>
       <h2>درباره من</h2>
       <div id="about-text">
       <p>سلام، من عمران لشکری هستم. برنامه‌نویسی رو دوست دارم و بیشتر وقتم به یادگیری امنیت و هک اخلاقی و کار با ابزارهای هوش مصنوعی می‌گذره.</p>
@@ -264,17 +458,30 @@
 
   <!-- ========== گالری ========== -->
   <section id="gallery">
-    <div class="wrap">
+    <div class="wrap reveal">
+      <span class="eyebrow-sm">تصاویر</span>
       <h2>گالری</h2>
-      <div class="gallery" id="gallery-grid">
-        <figure class="wide has-img"><img src="1.jpg" alt="عکس عمران لشکری" loading="lazy"></figure>
+      <div class="gallery tilt-wrap" id="gallery-grid">
+        <figure class="wide has-img tilt"><img src="1.jpg" alt="عکس عمران لشکری" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ویدیوها ========== -->
+  <section id="videos">
+    <div class="wrap reveal">
+      <span class="eyebrow-sm">ویدیو</span>
+      <h2>ویدیوها</h2>
+      <div class="videos" id="videos-grid">
+        <p class="videos-empty">به‌زودی...</p>
       </div>
     </div>
   </section>
 
   <!-- ========== وبلاگ ========== -->
   <section id="blog">
-    <div class="wrap">
+    <div class="wrap reveal">
+      <span class="eyebrow-sm">نوشته‌ها</span>
       <h2>وبلاگ</h2>
       <div id="posts"></div>
     </div>
@@ -282,9 +489,10 @@
 
   <!-- ========== ارتباط ========== -->
   <section id="contact" class="contact">
-    <div class="wrap">
+    <div class="wrap reveal">
+      <span class="eyebrow-sm">تماس</span>
       <h2>ارتباط با من</h2>
-      <p>سریع‌ترین راه، پیام توی اینستاگرامه.</p>
+      <p>سریع‌ترین راه، پیام توی اینستاگرامه. یا از دکمه‌ی پشتیبانی پایین صفحه پیام بده.</p>
       <p><a class="btn main" href="https://www.instagram.com/mr_lashkari86/" target="_blank" rel="noopener">@mr_lashkari86</a></p>
       <!-- برای اضافه کردن تلگرام یا ایمیل، یه دکمه‌ی دیگه مثل بالا بذار:
       <a class="btn" href="https://t.me/YOUR_ID" target="_blank" rel="noopener">تلگرام</a>
@@ -299,38 +507,116 @@
   <div class="wrap">© عمران لشکری</div>
 </footer>
 
+<!-- ========== دکمه و پنل پشتیبانی ========== -->
+<button id="support-toggle" type="button" aria-label="ارسال پیام به پشتیبانی" aria-expanded="false" aria-controls="support-panel">💬</button>
+<div id="support-panel" role="dialog" aria-label="پیام به پشتیبانی">
+  <h3>مشکلی پیش اومده؟</h3>
+  <p style="margin:0 0 .7rem;color:var(--mist);font-size:.9rem;">پیامت رو بنویس، مستقیم به گوشی من می‌رسه و جواب می‌دم.</p>
+  <textarea id="support-text" placeholder="پیامت رو اینجا بنویس..."></textarea>
+  <div class="row">
+    <button type="button" class="btn main" id="support-send-sms">پیامک</button>
+    <button type="button" class="btn" id="support-send-wa">واتساپ</button>
+  </div>
+</div>
+
 <script>
-  // Night skyline: fixed pattern, so it looks the same on every visit.
+  // هدر موقع اسکرول کمی تیره‌تر می‌شه، و بخش‌ها هنگام رسیدن محو ظاهر می‌شن.
   (function () {
-    var el = document.getElementById('skyline');
-    if (!el) return;
-    var seed = 7;
-    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
-
-    var count = window.innerWidth < 640 ? 9 : 17;
-    var lampBuilding = Math.floor(count * 0.62);
-
-    for (var i = 0; i < count; i++) {
-      var cols = 2 + Math.floor(rnd() * 3);
-      var rows = 4 + Math.floor(rnd() * 8);
-      var b = document.createElement('div');
-      b.className = 'bld';
-      b.style.setProperty('--cols', cols);
-      for (var r = 0; r < rows; r++) {
-        for (var c = 0; c < cols; c++) {
-          var w = document.createElement('span');
-          w.className = 'win';
-          if (rnd() < 0.22) w.className += ' on';
-          if (i === lampBuilding && r === 2 && c === 1) w.className = 'win lamp';
-          b.appendChild(w);
-        }
-      }
-      el.appendChild(b);
+    var header = document.querySelector('.top');
+    if (header) {
+      var onScroll = function () {
+        header.classList.toggle('scrolled', window.scrollY > 10);
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
     }
 
+    var items = document.querySelectorAll('.reveal');
+    if (items.length && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: .12 });
+      items.forEach(function (el) { io.observe(el); });
+    } else {
+      items.forEach(function (el) { el.classList.add('in'); });
+    }
   })();
 </script>
 
+<script>
+  // پیام خوش‌آمد موقع ورود به سایت
+  (function () {
+    var intro = document.getElementById('intro');
+    var btn = document.getElementById('intro-enter');
+    if (!intro || !btn) return;
+
+    if (sessionStorage.getItem('omran-entered') !== '1') {
+      document.body.classList.add('no-scroll');
+    }
+
+    btn.addEventListener('click', function () {
+      sessionStorage.setItem('omran-entered', '1');
+      intro.classList.add('hide');
+      document.body.classList.remove('no-scroll');
+      setTimeout(function () {
+        document.documentElement.classList.add('entered');
+      }, 500);
+    });
+  })();
+</script>
+
+<script>
+  // حس سه‌بعدی: کارت‌ها و صحنه‌ی لپ‌تاپ با حرکت موس کمی می‌چرخن (فقط روی دستگاه‌هایی که موس دارن)
+  (function () {
+    if (!window.matchMedia || !window.matchMedia('(hover: hover)').matches) return;
+    document.querySelectorAll('.tilt-wrap').forEach(function (wrap) {
+      var el = wrap.querySelector('.tilt');
+      if (!el) return;
+      wrap.addEventListener('mousemove', function (ev) {
+        var r = wrap.getBoundingClientRect();
+        var px = (ev.clientX - r.left) / r.width - .5;
+        var py = (ev.clientY - r.top) / r.height - .5;
+        el.style.transform = 'rotateX(' + (py * -8) + 'deg) rotateY(' + (px * 8) + 'deg) translateZ(6px)';
+      });
+      wrap.addEventListener('mouseleave', function () {
+        el.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+      });
+    });
+  })();
+</script>
+
+<script>
+  // پنل پشتیبانی: پیام رو با پیامک یا واتساپ به شماره‌ی عمران می‌فرسته
+  (function () {
+    var PHONE_INTL = '989034691139'; // بدون صفر اول، با کد کشور
+    var toggle = document.getElementById('support-toggle');
+    var panel = document.getElementById('support-panel');
+    var text = document.getElementById('support-text');
+    var smsBtn = document.getElementById('support-send-sms');
+    var waBtn = document.getElementById('support-send-wa');
+    if (!toggle || !panel) return;
+
+    toggle.addEventListener('click', function () {
+      var open = panel.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) text.focus();
+    });
+
+    function message() {
+      var v = (text.value || '').trim();
+      return v || 'سلام، از سایتت پیام می‌فرستم.';
+    }
+
+    if (smsBtn) smsBtn.addEventListener('click', function () {
+      location.href = 'sms:+' + PHONE_INTL + '?body=' + encodeURIComponent(message());
+    });
+    if (waBtn) waBtn.addEventListener('click', function () {
+      window.open('https://wa.me/' + PHONE_INTL + '?text=' + encodeURIComponent(message()), '_blank');
+    });
+  })();
+</script>
 
 <script>
   // محتوا (درباره من، گالری، وبلاگ) از فایل data.json خوانده می‌شه.
@@ -351,6 +637,16 @@
         if (isNaN(d)) return v || '';
         return new Intl.DateTimeFormat('fa-IR', { dateStyle: 'long' }).format(d);
       } catch (e) { return v || ''; }
+    }
+
+    // لینک یوتیوب یا آپارات رو به یه آدرس قابل‌نمایش (embed) تبدیل می‌کنه
+    function embedUrl(url) {
+      url = String(url || '').trim();
+      var yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{6,})/);
+      if (yt) return 'https://www.youtube.com/embed/' + yt[1];
+      var ap = url.match(/aparat\.com\/v\/([\w]+)/);
+      if (ap) return 'https://www.aparat.com/video/video/embed/videohash/' + ap[1] + '/vt/frame';
+      return null;
     }
 
     fetch('data.json', { cache: 'no-store' })
@@ -377,6 +673,48 @@
             img.loading = 'lazy';
             f.appendChild(img);
             grid.appendChild(f);
+          });
+        }
+
+        var vgrid = document.getElementById('videos-grid');
+        if (vgrid) {
+          vgrid.textContent = '';
+          var videos = d.videos || [];
+          if (!videos.length) {
+            var ve = document.createElement('p');
+            ve.className = 'videos-empty';
+            ve.textContent = 'به‌زودی...';
+            vgrid.appendChild(ve);
+          }
+          videos.forEach(function (v) {
+            var card = document.createElement('div');
+            card.className = 'video-card';
+            var frame = document.createElement('div');
+            frame.className = 'frame';
+            var embed = embedUrl(v.url);
+            if (embed) {
+              var ifr = document.createElement('iframe');
+              ifr.src = embed;
+              ifr.loading = 'lazy';
+              ifr.allowFullscreen = true;
+              ifr.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+              frame.appendChild(ifr);
+            } else if (v.url) {
+              var a = document.createElement('a');
+              a.href = v.url; a.target = '_blank'; a.rel = 'noopener';
+              a.className = 'btn main';
+              a.style.cssText = 'position:absolute;inset:auto;margin:auto;top:0;bottom:0;left:0;right:0;max-height:2.6rem;max-width:10rem;';
+              a.textContent = 'دیدن ویدیو';
+              frame.appendChild(a);
+            }
+            card.appendChild(frame);
+            if (v.title) {
+              var vt = document.createElement('div');
+              vt.className = 'title';
+              vt.textContent = v.title;
+              card.appendChild(vt);
+            }
+            vgrid.appendChild(card);
           });
         }
 
