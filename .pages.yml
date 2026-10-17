@@ -21,6 +21,17 @@ content:
         label: عکس‌های گالری
         type: image
         list: true
+      - name: videos
+        label: ویدیوها
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: عنوان
+            type: string
+          - name: url
+            label: لینک یوتیوب یا آپارات
+            type: string
       - name: posts
         label: نوشته‌های وبلاگ
         type: object
